@@ -1,27 +1,81 @@
-class Controller:
-    board=[[0 for x in range(10)]for y in range(10)]
+class Controller(object):
+    board =[[0 for x in range(8)]for y in range(8)]
 
     def __init__(self, b):
         self.board = b
 
-#will handle movements
-    def move(self, coor):
-        x = int(coor[0])
-        y = int(coor.split(",")[-1])
 
-        if(board[x][y] == " R "):
+    
+#will take a players inputs and make sure that they are valid
+    def move(self, coor):
+        row = int(coor[0])
+        col = int(coor.split(",")[-1])
+        can_move = False
+        valid_item = self.can_be_moved(row, col)
+
+    
+        while(valid_item == False):
+            print("No item that can be moved, Please re enter")
+            coor = input()
+            row = int(coor[0])
+            col = int(coor.split(",")[-1])
+            valid_item = self.can_be_moved(row, col)
+        
+        
+        if(valid_item == True):
             print("Has an item where would you like to move to?")
             coor = input()
-            new_x = int(coor[0])
-            new_y = int(coor.split(",")[-1])
+            new_row = int(coor[0])
+            new_col = int(coor.split(",")[-1])
 
-            if(new_x > x or new_x < x):
-                if(new_x == x+1 or new_x == x-1):
-                    if(y == y+1):
-                        board[x][y] = " | "
-                        board[new_x][new_y] = " R "
-        elif(board[x][y] == " | " or board[x][y] == " B "):
-            print("Invalid move try again.")
+        
+        can_move = self.check_valid(row, col, new_row, new_col)
+        
+        while(can_move == False):
+            print("Invalid Move, try a new one.")
+            coor = input()
+            new_row = int(coor[0])
+            new_col = int(coor.split(",")[-1])
+            can_move = self.check_valid(row, col, new_row, new_col)
+
+        return self.board
+
+#will check if the entered move is valid
+    def check_valid(self, row, col, new_row, new_col):
+        valid_move = False
+        if(new_col > col or new_col < col):
+            if(new_col == col+1 or new_col == col-1):
+                if(new_row == row-1):
+                    if(self.board[new_row][new_col] != " R "):
+                        self.board[row][col] = " | "
+                        self.board[new_row][new_col] = " R "
+                        valid_move = True
+        elif(self.board[row][col] == " | " or self.board[row][col] == " B "):
+            valid_move = False
+
+        return valid_move
+
+
+#will check if the item selected can be moved
+    def can_be_moved(self, row, col):
+
+        valid_item = False
+
+        if(self.board[row][col] == " R "):
+             if(self.board[row-1][col+1] != " R " or self.board[row-1][col-1] != " R " or col-1 >=0):
+                 valid_item = True
+
+
+        return valid_item
+            
+
+    
+        
+
+
+
+
+    
                     
         
         
