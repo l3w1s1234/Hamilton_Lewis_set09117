@@ -62,7 +62,7 @@ class AI_controller(object):
                         self.board[row][col] = " | "
                         self.board[new_row][new_col] = " B "
                         valid_move = True
-        if(self.board[row][col] == " R "):
+        if(self.board[new_row][new_col] == " R "):
             valid_move = False
 
         return valid_move
