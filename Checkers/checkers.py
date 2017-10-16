@@ -1,6 +1,7 @@
 from classes.controller import Controller
 from classes.stack import stack
-
+from classes.ai_controller import AI_controller
+from random import *
 
 
 width =8
@@ -9,7 +10,7 @@ height = 8
 board = [[0 for x in range(width)] for y in range(height)]
 
 player_cont = Controller(board)
-
+ai_cont = AI_controller(board)
 #populates the board
 for x in range(0, width):
     print("")
@@ -68,6 +69,17 @@ while(cont == True):
         print("")
         for y in range(0, height):
             print(board[x][y], end="")
+
+    #do ai's move
+    print("\nComputers turn.")
+    board = ai_cont.move()
+
+     #display board
+    for x in range(0, width):
+        print("")
+        for y in range(0, height):
+            print(board[x][y], end="")
+    
 
 
         

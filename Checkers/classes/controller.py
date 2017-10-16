@@ -50,7 +50,7 @@ class Controller(object):
                         self.board[row][col] = " | "
                         self.board[new_row][new_col] = " R "
                         valid_move = True
-        elif(self.board[row][col] == " | " or self.board[row][col] == " B "):
+        if(self.board[new_row][new_col] == " B "):
             valid_move = False
 
         return valid_move
@@ -62,9 +62,16 @@ class Controller(object):
         valid_item = False
 
         if(self.board[row][col] == " R "):
-             if(self.board[row-1][col+1] != " R " or self.board[row-1][col-1] != " R " or col-1 >=0):
-                 valid_item = True
-
+            if(col+1 > 7):
+                if(self.board[row-1][col-1] != " R "  ):
+                    valid_item = True
+            elif(col-1<0):
+                if(self.board[row-1][col+1] != " R "  ):
+                    valid_item = True
+            elif(col+1 <=7 or col-1 >=0):
+                if(self.board[row-1][col+1] != " R " or self.board[row-1][col-1] != " R " ):
+                    valid_item = True
+        
 
         return valid_item
             
