@@ -55,7 +55,10 @@ class AI_controller(object):
 #will check if the entered move is valid
     def check_valid(self, row, col, new_row, new_col):
         valid_move = False
-        if(new_col > col or new_col < col):
+        
+        if(self.board[new_row][new_col] == " R "):
+            valid_move = False
+        elif(new_col > col or new_col < col and valid_move != True):
             if(new_col == col+1 or new_col == col-1):
                 if(new_row == row+1):
                     if(self.board[new_row][new_col] != " B "):

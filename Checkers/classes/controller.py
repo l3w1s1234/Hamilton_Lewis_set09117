@@ -43,15 +43,19 @@ class Controller(object):
 #will check if the entered move is valid
     def check_valid(self, row, col, new_row, new_col):
         valid_move = False
-        if(new_col > col or new_col < col):
+        if(self.board[new_row][new_col] == " B "):
+            if(new_col <7 and new_col >0):
+                valid_move = self.jump_counter(row, col, new_row, new_col)
+                if(valid_move == True):
+                    print("Player jumped counter at space ", new_row, ",", new_col)
+        elif(new_col > col or new_col < col and valid_move != True):
             if(new_col == col+1 or new_col == col-1):
                 if(new_row == row-1):
                     if(self.board[new_row][new_col] != " R "):
                         self.board[row][col] = " | "
                         self.board[new_row][new_col] = " R "
                         valid_move = True
-        if(self.board[new_row][new_col] == " B "):
-            valid_move = False
+        
 
         return valid_move
 
@@ -74,6 +78,76 @@ class Controller(object):
         
 
         return valid_item
+
+#will check if the counter can be jumped and will change the board accordingly, and return if it can or not
+    def jump_counter(self, row, col, new_row, new_col):
+
+        can_jump = False
+        valid_move = False
+
+        #check if the counter can be jumped
+        
+        if(new_col > col):
+            if(self.board[new_row-1][new_col+1] == " | " and new_col + 1 <= 7):
+                can_jump = True
+                valid_move = True
+        elif(new_col < col):
+            if(self.board[new_row-1][new_col-1] == " | " and new_col >= 0):
+                can_jump = True
+                valid_move = True
+
+        #do a loop that willl jump the counter as many times as it can
+        while(can_jump == True):
+            if(new_col > col):
+                #change the board accordingly
+                self.board[row][col] = " | "
+                self.board[new_row][new_col] = " | "
+                self.board[new_row-1][new_col+1] = " R "
+
+                #will change the variables so it can check if another counter can be jumped
+                row = new_row-1
+                col = new_col+1
+                new_row = new_row-2
+                new_col = new_col+2
+
+                
+                if(new_col>7):
+                    can_jump = False
+                elif(self.board[new_row][new_col] == " B " ):
+                     if(self.board[new_row-1][new_col+1] != " | " or new_col + 1 > 7):
+                         can_jump = False
+                elif(self.board[new_row][new_col] != " B "):
+                    can_jump  = False
+
+                    
+            elif(new_col < col):
+                #change the board accordingly
+                self.board[row][col] = " | "
+                self.board[new_row][new_col] = " | "
+                self.board[new_row-1][new_col-1] = " R "
+
+                #will change the variables so it can check if another counter can be jumped
+                row = new_row-1
+                col = new_col-1
+                new_row = new_row-2
+                new_col = new_col-2
+
+                if(new_col<0):
+                    can_jump = False
+                elif(self.board[new_row][new_col] == " B " ):
+                     if(self.board[new_row-1][new_col-1] != " | " or new_col - 1 < 0):
+                         can_jump = False
+                elif(self.board[new_row][new_col] != " B "):
+                    can_jump  = False
+
+        return valid_move
+
+                
+            
+
+        
+
+        
             
 
     
