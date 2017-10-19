@@ -87,18 +87,20 @@ class Controller(object):
 
         #check if the counter can be jumped
         
-        if(new_col > col):
-            if(self.board[new_row-1][new_col+1] == " | " and new_col + 1 <= 7):
+        
+        if(self.board[new_row-1][new_col+1] == " | " and new_col + 1 <= 7):
                 can_jump = True
                 valid_move = True
-        elif(new_col < col):
-            if(self.board[new_row-1][new_col-1] == " | " and new_col >= 0):
+       
+        elif(self.board[new_row-1][new_col-1] == " | " and new_col >= 0):
                 can_jump = True
                 valid_move = True
 
         #do a loop that willl jump the counter as many times as it can
         while(can_jump == True):
+
             if(new_col > col):
+            
                 #change the board accordingly
                 self.board[row][col] = " | "
                 self.board[new_row][new_col] = " | "
@@ -107,19 +109,7 @@ class Controller(object):
                 #will change the variables so it can check if another counter can be jumped
                 row = new_row-1
                 col = new_col+1
-                new_row = new_row-2
-                new_col = new_col+2
 
-                
-                if(new_col>7):
-                    can_jump = False
-                elif(self.board[new_row][new_col] == " B " ):
-                     if(self.board[new_row-1][new_col+1] != " | " or new_col + 1 > 7):
-                         can_jump = False
-                elif(self.board[new_row][new_col] != " B "):
-                    can_jump  = False
-
-                    
             elif(new_col < col):
                 #change the board accordingly
                 self.board[row][col] = " | "
@@ -129,16 +119,38 @@ class Controller(object):
                 #will change the variables so it can check if another counter can be jumped
                 row = new_row-1
                 col = new_col-1
-                new_row = new_row-2
-                new_col = new_col-2
+                
 
-                if(new_col<0):
+            if(col + 1 < 7): 
+                if(self.board[row-1][col+1] == " B "):
+                    new_row = row-1
+                    new_col = col+1
+            elif(col-1>0):
+                if(self.board[row+1][col-1] == " B "):
+                    new_row = row - 1
+                    new_col = col - 1
+                
+            if(new_col>col):
+                if(new_col+1 > 7):
                     can_jump = False
                 elif(self.board[new_row][new_col] == " B " ):
-                     if(self.board[new_row-1][new_col-1] != " | " or new_col - 1 < 0):
-                         can_jump = False
-                elif(self.board[new_row][new_col] != " B "):
+                    if(self.board[new_row-1][new_col+1] != " | " ):
+                        can_jump = False
+            elif(new_col<col):
+                if(new_col-1 < 0):
+                    can_jump = False
+                if(self.board[new_row][new_col] == " B " ):
+                    if(self.board[new_row-1][new_col-1] != " | "):
+                        can_jump = False
+
+
+
+
+            if(self.board[new_row][new_col] != " B "):
                     can_jump  = False
+
+                    
+        
 
         return valid_move
 
