@@ -106,13 +106,16 @@ class Controller(object):
                     valid_item = True
                 elif(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
                     valid_item = True
-            elif(col+1 <=7 or col-1 >=0):
+            elif(col+1 <=7 and col-1 >=0):
                 if(self.board[row-1][col+1] == " | " or self.board[row-1][col-1] == " | " ):
                     valid_item = True
 
-                elif(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
+
+            if(col+2 <=7):
+                if(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
                     valid_item = True
-                elif(self.board[row-1][col-1] == " B " and self.board[row-2][col-2] == " | "):
+            elif(col-2 >=0):
+                if(self.board[row-1][col-1] == " B " and self.board[row-2][col-2] == " | "):
                     valid_item = True
                             
         if(self.board[row][col] == " K "):
@@ -126,13 +129,15 @@ class Controller(object):
                     valid_item = True
                 elif(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
                     valid_item = True
-            elif(col+1 <=7 or col-1 >=0):
+            elif(col+1 <=7 and col-1 >=0):
                 if(self.board[row-1][col+1] == " | " or self.board[row-1][col-1] == " | " ):
                     valid_item = True
 
-                elif(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
+            if(col+2 <=7):
+                if(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
                     valid_item = True
-                elif(self.board[row-1][col-1] == " B " and self.board[row-2][col-2] == " | "):
+            elif(col-2 >=0):
+                if(self.board[row-1][col-1] == " B " and self.board[row-2][col-2] == " | "):
                     valid_item = True
             
         
@@ -195,17 +200,17 @@ class Controller(object):
                 col = new_col-1
                 
             #check if the another jump can made
-            if(row-1 >= 0 or row+1 <=7):
-                if(col + 1 < 7): 
-                    if(self.board[row-1][col+1] == " B "):
+            if(row-2 >=0):
+                if(col + 2 <= 7 ): 
+                    if(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
                         new_row = row-1
                         new_col = col+1
-                elif(col-1>0):
-                    if(self.board[row-1][col-1] == " B "):
+                if(col-2>=0 ):
+                    if(self.board[row-1][col-1] == " B " and self.board[row-2][col-2] == " | "):
                         new_row = row - 1
                         new_col = col - 1
                 
-            if(new_col>col):
+            if(new_col>col ):
                 if(new_col+1 > 7):
                     can_jump = False
                 elif(self.board[new_row][new_col] == " B " ):

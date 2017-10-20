@@ -56,19 +56,40 @@ class AI_controller(object):
 #will check if the entered move is valid
     def check_valid(self, row, col, new_row, new_col):
         valid_move = False
+        is_a_king = False
+
+        if(self.board[row][col] == " Q "):is_a_king = True
         
         if(self.board[new_row][new_col] == " R "):
             if(new_col <7 and new_col >0):
                 valid_move = self.jump_counter(row, col, new_row, new_col)
                 if(valid_move == True):
                     print("Computer jumped counter at space ", new_row, ",", new_col)
-        elif(new_col > col or new_col < col and valid_move != True):
+        elif(new_col > col or new_col < col and valid_move != True and is_a_king == False):
             if(new_col == col+1 or new_col == col-1):
                 if(new_row == row+1):
-                    if(self.board[new_row][new_col] != " B "):
+                    if(self.board[new_row][new_col] != " B " and new_row != 7):
                         self.board[row][col] = " | "
                         self.board[new_row][new_col] = " B "
                         valid_move = True
+                    elif(self.board[new_row][new_col] == " | "  and new_row == 7):
+                        #changes items on the board and kings the counter
+                        self.board[row][col] = " | "
+                        self.board[new_row][new_col] = " Q "
+                        valid_move = True
+        elif(new_col > col or new_col < col and valid_move != True and is_a_king == True):
+            if(new_col == col+1 or new_col == col-1):
+                if(new_row > row or new_row<row):
+                    if(self.board[new_row][new_col] == " | "):
+                        #changes items on the board and kings the counter
+                        self.board[row][col] = " | "
+                        self.board[new_row][new_col] = " Q "
+                        valid_move = True
+
+
+
+
+
         if(self.board[new_row][new_col] == " R "):
             valid_move = False
 
@@ -82,13 +103,46 @@ class AI_controller(object):
         
         if(self.board[row][col] == " B "):
             if(col+1 > 7):
-                if(self.board[row+1][col-1] != " B "  ):
+                if(self.board[row+1][col-1] != " | " ):
+                    valid_item = True
+                elif(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | "):
                     valid_item = True
             elif(col-1<0):
-                if(self.board[row+1][col+1] != " B "  ):
-                     valid_item = True
-            elif(col+1 <=7 or col-1 >=0):
-                if(self.board[row+1][col+1] != " B " or self.board[row+1][col-1] != " B " ):
+                if(self.board[row+1][col+1] == " | "):
+                    valid_item = True
+                elif(self.board[row+1][col+1] == " R " and self.board[row+2][col+2] == " | "):
+                    valid_item = True
+            elif(col+1 <=7 and col-1 >=0):
+                if(self.board[row+1][col+1] == " | " or self.board[row+1][col-1] == " | " ):
+                    valid_item = True
+
+            if(col+2 <=7):
+                if(self.board[row-1][col+1] == " R " and self.board[row-2][col+2] == " | "):
+                    valid_item = True
+            elif(col-2 >=0):
+                if(self.board[row-1][col-1] == " R " and self.board[row-2][col-2] == " | "):
+                    valid_item = True
+                            
+        if(self.board[row][col] == " Q "):
+            if(col+1 > 7):
+                if(self.board[row+1][col-1] != " | " ):
+                    valid_item = True
+                elif(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | "):
+                    valid_item = True
+            elif(col-1<0):
+                if(self.board[row+1][col+1] == " | "):
+                    valid_item = True
+                elif(self.board[row+1][col+1] == " R " and self.board[row+2][col+2] == " | "):
+                    valid_item = True
+            elif(col+1 <=7 and col-1 >=0):
+                if(self.board[row+1][col+1] == " | " or self.board[row+1][col-1] == " | " ):
+                    valid_item = True
+
+            if(col+2 <=7):
+                if(self.board[row-1][col+1] == " R " and self.board[row-2][col+2] == " | "):
+                    valid_item = True
+            elif(col-2 >=0):
+                if(self.board[row-1][col-1] == " R " and self.board[row-2][col-2] == " | "):
                     valid_item = True
 
 
@@ -123,31 +177,37 @@ class AI_controller(object):
             if(new_col > col):
             
                 #change the board accordingly
-                self.board[row][col] = " | "
-                self.board[new_row][new_col] = " | "
-                self.board[new_row+1][new_col+1] = " B "
+                if(new_row+1 != 7):
+                    self.board[row][col] = " | "
+                    self.board[new_row][new_col] = " | "
+                    self.board[new_row+1][new_col+1] = " B "
+                elif(new_row+1 == 7):
+                    self.board[row][col] = " | "
+                    self.board[new_row][new_col] = " | "
+                    self.board[new_row+1][new_col+1] = " Q "
 
                 #will change the variables so it can check if another counter can be jumped
                 row = new_row+1
                 col = new_col+1
 
             elif(new_col < col):
-                #change the board accordingly
-                self.board[row][col] = " | "
-                self.board[new_row][new_col] = " | "
-                self.board[new_row+1][new_col-1] = " B "
-
-                #will change the variables so it can check if another counter can be jumped
-                row = new_row-1
-                col = new_col-1
+                 #change the board accordingly
+                if(new_row+1 != 7):
+                    self.board[row][col] = " | "
+                    self.board[new_row][new_col] = " | "
+                    self.board[new_row+1][new_col-1] = " B "
+                elif(new_row+1 == 7):
+                    self.board[row][col] = " | "
+                    self.board[new_row][new_col] = " | "
+                    self.board[new_row+1][new_col-1] = " Q "
                 
 
-            if(col + 1 < 7): 
-                if(self.board[row+1][col+1] == " R "):
+            if(col + 2 <= 7 and row+2 <=7): 
+                if(self.board[row+1][col+1] == " R "and self.board[row+2][col+2] == " | "):
                     new_row = row-1
                     new_col = col+1
-            elif(col-1>0):
-                if(self.board[row+1][col-1] == " R "):
+            if(col-1>=0 and row+2 <=7):
+                if(self.board[row+1][col-1] == " R "and self.board[row+2][col-2] == " | "):
                     new_row = row - 1
                     new_col = col - 1
                 
