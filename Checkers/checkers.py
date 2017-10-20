@@ -57,7 +57,7 @@ cont = True
 coor = ""
 
 
-
+#game loop
 while(cont == True):
     print("\nEnter the row and column of the checker you want to move.\n e.g. (0,0) would be the top left of the board and (7,7) would be bottom right.")
     coor = input()

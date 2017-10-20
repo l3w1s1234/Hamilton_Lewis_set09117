@@ -105,13 +105,17 @@ class AI_controller(object):
        #check if the counter can be jumped
         
         
-        if(self.board[new_row-1][new_col+1] == " | " and new_col + 1 <= 7):
-                can_jump = True
-                valid_move = True
-       
-        elif(self.board[new_row-1][new_col-1] == " | " and new_col >= 0):
-                can_jump = True
-                valid_move = True
+        if(new_col + 1 <=7 or new_col-1>=0):
+            if(new_row - 1 >=0 or new_row + 1 <=7):
+
+                if(new_col > col):   
+                    if(self.board[new_row-1][new_col+1] == " | " ):
+                        can_jump = True
+                        valid_move = True
+                if(new_col < col):
+                    if(self.board[new_row-1][new_col-1] == " | ") :
+                        can_jump = True
+                        valid_move = True
 
         #do a loop that willl jump the counter as many times as it can
         while(can_jump == True):
@@ -121,17 +125,17 @@ class AI_controller(object):
                 #change the board accordingly
                 self.board[row][col] = " | "
                 self.board[new_row][new_col] = " | "
-                self.board[new_row-1][new_col+1] = " B "
+                self.board[new_row+1][new_col+1] = " B "
 
                 #will change the variables so it can check if another counter can be jumped
-                row = new_row-1
+                row = new_row+1
                 col = new_col+1
 
             elif(new_col < col):
                 #change the board accordingly
                 self.board[row][col] = " | "
                 self.board[new_row][new_col] = " | "
-                self.board[new_row-1][new_col-1] = " B "
+                self.board[new_row+1][new_col-1] = " B "
 
                 #will change the variables so it can check if another counter can be jumped
                 row = new_row-1
@@ -139,7 +143,7 @@ class AI_controller(object):
                 
 
             if(col + 1 < 7): 
-                if(self.board[row-1][col+1] == " R "):
+                if(self.board[row+1][col+1] == " R "):
                     new_row = row-1
                     new_col = col+1
             elif(col-1>0):
@@ -151,13 +155,13 @@ class AI_controller(object):
                 if(new_col+1 > 7):
                     can_jump = False
                 elif(self.board[new_row][new_col] == " R " ):
-                    if(self.board[new_row-1][new_col+1] != " | " ):
+                    if(self.board[new_row+1][new_col+1] != " | " ):
                         can_jump = False
             elif(new_col<col):
                 if(new_col-1 < 0):
                     can_jump = False
                 if(self.board[new_row][new_col] == " R " ):
-                    if(self.board[new_row-1][new_col-1] != " | "):
+                    if(self.board[new_row+1][new_col-1] != " | "):
                         can_jump = False
 
 
