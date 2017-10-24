@@ -51,14 +51,14 @@ class Controller(object):
 
         if(self.board[row][col] == " K "):is_a_king = True
 
-        
+        print(self.board[new_row][new_col])
         
         if(self.board[new_row][new_col] == " B "):
             if(new_col <7 and new_col >0):
                 valid_move = self.jump_counter(row, col, new_row, new_col)
                 if(valid_move == True):
                     print("Player jumped counter at space ", new_row, ",", new_col)
-        elif(new_col > col or new_col < col and valid_move != True and is_a_king == False):
+        elif(valid_move != True and is_a_king == False):
             if(new_col == col+1 or new_col == col-1):
                 if(new_row == row-1):
                     if(self.board[new_row][new_col] == " | " and new_row != 0):
@@ -71,9 +71,9 @@ class Controller(object):
                         self.board[row][col] = " | "
                         self.board[new_row][new_col] = " K "
                         valid_move = True
-        elif(new_col > col or new_col < col and valid_move != True and is_a_king == True):
+        elif(valid_move != True and is_a_king == True):
             if(new_col == col+1 or new_col == col-1):
-                if(new_row > row or new_row<row):
+                if(new_row == row-1 or new_row==row+1):
                     if(self.board[new_row][new_col] == " | "):
                         #changes items on the board and kings the counter
                         self.board[row][col] = " | "
@@ -97,16 +97,14 @@ class Controller(object):
 
         if(self.board[row][col] == " R "):
             if(col+1 > 7):
-                if(self.board[row-1][col-1] != " | " ):
+                if(self.board[row-1][col-1] == " | " ):
                     valid_item = True
-                elif(self.board[row-1][col-1] == " B " and self.board[row-2][col-2] == " | "):
-                    valid_item = True
-            elif(col-1<0):
+                
+            if(col-1<0):
                 if(self.board[row-1][col+1] == " | "):
                     valid_item = True
-                elif(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
-                    valid_item = True
-            elif(col+1 <=7 and col-1 >=0):
+                
+            if(col+1 <=7 and col-1 >=0):
                 if(self.board[row-1][col+1] == " | " or self.board[row-1][col-1] == " | " ):
                     valid_item = True
 
@@ -114,30 +112,33 @@ class Controller(object):
             if(col+2 <=7):
                 if(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
                     valid_item = True
-            elif(col-2 >=0):
+            if(col-2 >=0):
                 if(self.board[row-1][col-1] == " B " and self.board[row-2][col-2] == " | "):
                     valid_item = True
-                            
+
+        #movements for a knged piece                    
         if(self.board[row][col] == " K "):
             if(col+1 > 7):
-                if(self.board[row-1][col-1] != " | " ):
+                if(self.board[row-1][col-1] == " | " or self.board[row+1][col-1] == " | " ):
                     valid_item = True
-                elif(self.board[row-1][col-1] == " B " and self.board[row-2][col-2] == " | "):
+                
+            if(col-1<0):
+                if(self.board[row-1][col+1] == " | " or self.board[row+1][col+1] == " | " ):
                     valid_item = True
-            elif(col-1<0):
-                if(self.board[row-1][col+1] == " | "):
-                    valid_item = True
-                elif(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
-                    valid_item = True
-            elif(col+1 <=7 and col-1 >=0):
-                if(self.board[row-1][col+1] == " | " or self.board[row-1][col-1] == " | " ):
+                
+            if(col+1 <=7 and col-1 >=0):
+                if(self.board[row-1][col+1] == " | " or self.board[row-1][col-1] == " | " or self.board[row+1][col-1] == " | " or self.board[row+1][col+1] == " | " ):
                     valid_item = True
 
-            if(col+2 <=7):
-                if(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | "):
+            if(col+2 <=7 and row + 2 <=7 and row - 2 >= 0):
+                if(self.board[row-1][col+1] == " B " and self.board[row-2][col+2] == " | " ):
                     valid_item = True
-            elif(col-2 >=0):
+                if(self.board[row+1][col+1] == " B " and self.board[row+2][col+2] == " | " ):
+                    valid_item = True
+            if(col-2 >=0 and row + 2 <=7 and row - 2 >= 0):
                 if(self.board[row-1][col-1] == " B " and self.board[row-2][col-2] == " | "):
+                    valid_item = True
+                if(self.board[row+1][col-1] == " B " and self.board[row+2][col-2] == " | "):
                     valid_item = True
             
         
@@ -163,6 +164,40 @@ class Controller(object):
                     if(self.board[new_row-1][new_col-1] == " | ") :
                         can_jump = True
                         valid_move = True
+
+        if(self.board[row][col] == " K "):
+                if(new_row - 1 >=0 or new_row + 1 <=7):
+                    if(new_col > col):   
+                        if(self.board[new_row-1][new_col+1] == " | " or self.board[new_row+1][new_col+1]== " | "):
+                            can_jump = True
+                            valid_move = True
+                    if(new_col < col):
+                        if(self.board[new_row-1][new_col-1] == " | " or self.board[new_row+1][new_col-1]== " | ") :
+                            can_jump = True
+                            valid_move = True
+
+        #will change the board for a kinged pieces jump
+        if(can_jump == True and self.board[row][col] == " K "):
+            if(new_col > col):
+
+                self.board[row][col] = " | "
+                self.board[new_row][new_col] = " | "
+                if(new_row > row):
+                    self.board[new_row+1][new_col+1] = " K "
+                else:
+                    self.board[new_row-1][new_col+1] = " K "
+                    
+                    
+
+            elif(new_col < col):
+                self.board[row][col] = " | "
+                self.board[new_row][new_col] = " | "
+                if(new_row > row):
+                    self.board[new_row+1][new_col-1] = " K "
+                else:
+                    self.board[new_row-1][new_col-1] = " K "
+            can_jump = False
+            
 
         #do a loop that willl jump the counter as many times as it can
         while(can_jump == True):
