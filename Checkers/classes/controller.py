@@ -51,7 +51,6 @@ class Controller(object):
 
         if(self.board[row][col] == " K "):is_a_king = True
 
-        print(self.board[new_row][new_col])
         
         if(self.board[new_row][new_col] == " B "):
             if(new_col <7 and new_col >0):

@@ -12,8 +12,10 @@ board = [[0 for x in range(width)] for y in range(height)]
 player_cont = Controller(board)
 ai_cont = AI_controller(board)
 #populates the board
+print("    0  1  2  3  4  5  6  7")
 for x in range(0, width):
     print("")
+    print(x,end="  ")
     #check valid spaces for checkers
     for y in range(0, height):
         #if row is the top 3 on the board
@@ -64,9 +66,11 @@ while(cont == True):
 
     board = player_cont.move(coor)
 
+    print("    0  1  2  3  4  5  6  7")
     #display board
     for x in range(0, width):
         print("")
+        print(x,end="  ")
         for y in range(0, height):
             print(board[x][y], end="")
 
@@ -74,9 +78,11 @@ while(cont == True):
     print("\nComputers turn.")
     board = ai_cont.move()
 
+    print("    0  1  2  3  4  5  6  7")
      #display board
     for x in range(0, width):
         print("")
+        print(x,end="  ")
         for y in range(0, height):
             print(board[x][y], end="")
     
