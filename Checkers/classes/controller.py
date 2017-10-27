@@ -1,5 +1,8 @@
+
+
 class Controller(object):
     board =[[0 for x in range(8)]for y in range(8)]
+    captured_counters = 0
 
     def __init__(self, b):
         self.board = b
@@ -185,7 +188,7 @@ class Controller(object):
                     self.board[new_row+1][new_col+1] = " K "
                 else:
                     self.board[new_row-1][new_col+1] = " K "
-                    
+                self.captured_counters += 1
                     
 
             elif(new_col < col):
@@ -195,12 +198,13 @@ class Controller(object):
                     self.board[new_row+1][new_col-1] = " K "
                 else:
                     self.board[new_row-1][new_col-1] = " K "
+                self.captured_counters += 1
             can_jump = False
             
 
         #do a loop that willl jump the counter as many times as it can
         while(can_jump == True):
-
+            self.captured_counters += 1
             if(new_col > col):
             
                 #change the board accordingly    
@@ -272,7 +276,12 @@ class Controller(object):
 
         return valid_move
 
-                
+
+
+    #will return a true false value if game has been won
+    def has_won(self):
+        if(self.captured_counters == 12):return True
+        else: return False
             
 
         

@@ -1,9 +1,11 @@
 from random import *
 
+
 class AI_controller(object):
     board =[[0 for x in range(8)]for y in range(8)]
     valid_items = []
     possible_jumps = []
+    captured_counters = 0
     
     def __init__(self, b):
         self.board = b
@@ -293,6 +295,8 @@ class AI_controller(object):
                     self.board[new_row+1][new_col+1] = " Q "
                 elif(new_row < row):
                     self.board[new_row-1][new_col+1] = " Q "
+                self.captured_counters += 1
+                
 
                 
                     
@@ -305,6 +309,7 @@ class AI_controller(object):
                     self.board[new_row+1][new_col-1] = " Q "
                 elif(new_row < row):
                     self.board[new_row-1][new_col-1] = " Q "
+                self.captured_counters += 1
 
 
 
@@ -313,6 +318,7 @@ class AI_controller(object):
 
         #do a loop that willl jump the counter as many times as it can
         while(can_jump == True):
+            self.captured_counters += 1
 
             if(new_col > col):
             
@@ -325,6 +331,7 @@ class AI_controller(object):
                     self.board[row][col] = " | "
                     self.board[new_row][new_col] = " | "
                     self.board[new_row+1][new_col+1] = " Q "
+                
 
                 #will change the variables so it can check if another counter can be jumped
                 row = new_row+1
@@ -403,6 +410,14 @@ class AI_controller(object):
         
 
         return can_jump
+
+
+
+
+    #will return a true false value if game has been won
+    def has_won(self):
+        if(self.captured_counters == 12):return True
+        else: return False
 
 
     
