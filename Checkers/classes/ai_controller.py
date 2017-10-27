@@ -37,51 +37,57 @@ class AI_controller(object):
                 col = int(coor.split(",")[-1])
                 
 
-            
+                #do a jump for normal counter
                 if(self.board[row][col] == " B "):
-                    if(self.board[row+1][col+1] == " R " and self.board[row+2][col+2] == " | " and valid_move == False):
-                        new_row = row+1
-                        new_col = col+1
-                        valid_move = self.jump_counter(row,col,new_row,new_col)
-                        print("Computer jumped counter at",new_row,",",new_col)
-                    if(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | " and valid_move == False):
-                        new_row = row+1
-                        new_col = col-1
-                        valid_move = self.jump_counter(row,col,new_row,new_col)
-                        print("Computer jumped counter at",new_row,",",new_col)
-               
-                if(self.board[row][col] == " Q "):
-                    if(row+2 < 7):
+                    if(col+2<7):    
                         if(self.board[row+1][col+1] == " R " and self.board[row+2][col+2] == " | " and valid_move == False):
                             new_row = row+1
                             new_col = col+1
                             valid_move = self.jump_counter(row,col,new_row,new_col)
                             print("Computer jumped counter at",new_row,",",new_col)
+
+                    if(col-2>0):
                         if(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | " and valid_move == False):
                             new_row = row+1
                             new_col = col-1
                             valid_move = self.jump_counter(row,col,new_row,new_col)
                             print("Computer jumped counter at",new_row,",",new_col)
+
+               #do a jump for a kinged piece
+                if(self.board[row][col] == " Q "):
+
+                    if(row+2 < 7):
+                        if(col+2<7):
+                            if(self.board[row+1][col+1] == " R " and self.board[row+2][col+2] == " | " and valid_move == False):
+                                new_row = row+1
+                                new_col = col+1
+                                valid_move = self.jump_counter(row,col,new_row,new_col)
+                                print("Computer jumped counter at",new_row,",",new_col)
+                        if(col-2>0):
+                            if(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | " and valid_move == False):
+                                new_row = row+1
+                                new_col = col-1
+                                valid_move = self.jump_counter(row,col,new_row,new_col)
+                                print("Computer jumped counter at",new_row,",",new_col)
                     if(row-2 > 0):
-                        if(self.board[row-1][col+1] == " R " and self.board[row-2][col+2] == " | " and valid_move == False):
-                            new_row = row-1
-                            new_col = col+1
-                            valid_move = self.jump_counter(row,col,new_row,new_col)
-                            print("Computer jumped counter at",new_row,",",new_col)
-                        if(self.board[row-1][col-1] == " R " and self.board[row-2][col-2] == " | " and valid_move == False):
-                            new_row = row-1
-                            new_col = col-1
-                            valid_move = self.jump_counter(row,col,new_row,new_col)
-                            print("Computer jumped counter at",new_row,",",new_col)
+                        if(col+2<7):
+                            
+                            if(self.board[row-1][col+1] == " R " and self.board[row-2][col+2] == " | " and valid_move == False):
+                                new_row = row-1
+                                new_col = col+1
+                                valid_move = self.jump_counter(row,col,new_row,new_col)
+                                print("Computer jumped counter at",new_row,",",new_col)
+                        if(col-2>0):
+                            if(self.board[row-1][col-1] == " R " and self.board[row-2][col-2] == " | " and valid_move == False):
+                                new_row = row-1
+                                new_col = col-1
+                                valid_move = self.jump_counter(row,col,new_row,new_col)
+                                print("Computer jumped counter at",new_row,",",new_col)
 
 
 
-                    
-
-                
-                    
-                
-
+                        
+            #will do a move that isnt a jump
             if(valid_move == False):
                 
                 coor = choice(self.valid_items)
@@ -167,9 +173,9 @@ class AI_controller(object):
 
 
         #will check if the counter can be jumped and put it into the possible jumps list
-        if(self.board[row][col] == " B "):
+        if(self.board[row][col] == " B " ):
             if(col+1<7):
-                if(self.board[row+1][col+1] == " R "):
+                if(self.board[row+1][col+1] == " R " or self.board[row+1][col+1] == " K "):
                     new_row = row+1
                     new_col = col+1
                     valid_move = self.check_jump(row, col, new_row, new_col)
@@ -177,7 +183,7 @@ class AI_controller(object):
                     coor = str(row)+ "," + str(col)
                     self.possible_jumps.insert(-1,coor)
             if(col-1>0):
-                if(self.board[row+1][col-1] == " R "):
+                if(self.board[row+1][col-1] == " R "or self.board[row+1][col-1] == " K "):
                     new_row = row+1
                     new_col = col-1
                     valid_move = self.check_jump(row, col, new_row, new_col)
@@ -189,32 +195,44 @@ class AI_controller(object):
         if(self.board[row][col] == " Q "):
             if(col+1<7):
                 if(row+1 <7):
-                    if(self.board[row+1][col+1] == " R "):
+                    if(self.board[row+1][col+1] == " R " or self.board[row+1][col+1] == " K "):
                         new_row = row+1
                         new_col = col+1
                         valid_move = self.check_jump(row, col, new_row, new_col)
+                    if(valid_move == True):
+                        coor = str(row)+ "," + str(col)
+                        self.possible_jumps.insert(-1,coor)
 
                 if(row-1>0):
-                    if(self.board[row-1][col+1] == " R "):
+                    if(self.board[row-1][col+1] == " R " or self.board[row+1][col+1] == " K "):
                         new_row = row+1
                         new_col = col+1
                         valid_move = self.check_jump(row, col, new_row, new_col)
+                    if(valid_move == True):
+                        coor = str(row)+ "," + str(col)
+                        self.possible_jumps.insert(-1,coor)
                 
             if(col-1>0):
                 if(row+1 <7):
-                    if(self.board[row+1][col-1] == " R "):
+                    if(self.board[row+1][col-1] == " R "or self.board[row+1][col-1] == " K "):
                         new_row = row+1
                         new_col = col-1
                         valid_move = self.check_jump(row, col, new_row, new_col)
+                    if(valid_move == True):
+                        coor = str(row)+ "," + str(col)
+                        self.possible_jumps.insert(-1,coor)
                 if(row-1>0):
-                    if(self.board[row-1][col-1] == " R "):
+                    if(self.board[row-1][col-1] == " R " or self.board[row+1][col-1] == " K "):
                         new_row = row+1
                         new_col = col-1
                         valid_move = self.check_jump(row, col, new_row, new_col)
+                    if(valid_move == True):
+                        coor = str(row)+ "," + str(col)
+                        self.possible_jumps.insert(-1,coor)
         
 
 
-                              
+        #check if there is free space to move too                      
         if(self.board[row][col] == " B "):
             if(col+1 > 7):
                 if(self.board[row+1][col-1] == " | " ):
@@ -362,12 +380,11 @@ class AI_controller(object):
 
 
         if(new_col+1<=7):
-            if(new_row+1 <= 7):
-                if(new_col > col):   
+            if(new_row+1 <= 7):   
                     if(self.board[new_row+1][new_col+1] == " | " ):
                         can_jump = True
 
-            if(new_row-1 > 0):
+            if(new_row-1 >= 0):
                 if(new_col > col):   
                     if(self.board[new_row-1][new_col+1] == " | " ):
                         can_jump = True
@@ -375,13 +392,10 @@ class AI_controller(object):
 
         if(new_col-1>=0):
             if(new_row+1 <= 7):
-                        
-                if(new_col < col):
                     if(self.board[new_row+1][new_col-1] == " | ") :
                         can_jump = True
 
-            if(new_row-1 >= 0):
-                if(new_col < col):   
+            if(new_row-1 >= 0):   
                     if(self.board[new_row-1][new_col-1] == " | " ):
                         can_jump = True
                         

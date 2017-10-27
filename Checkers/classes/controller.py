@@ -52,7 +52,7 @@ class Controller(object):
         if(self.board[row][col] == " K "):is_a_king = True
 
         
-        if(self.board[new_row][new_col] == " B "):
+        if(self.board[new_row][new_col] == " B " or self.board[new_row][new_col] == " Q " ):
             if(new_col <7 and new_col >0):
                 valid_move = self.jump_counter(row, col, new_row, new_col)
                 if(valid_move == True):
@@ -203,7 +203,7 @@ class Controller(object):
 
             if(new_col > col):
             
-                #change the board accordingly
+                #change the board accordingly    
                 if(new_row-1 != 0):
                     self.board[row][col] = " | "
                     self.board[new_row][new_col] = " | "
