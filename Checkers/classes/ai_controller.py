@@ -101,9 +101,9 @@ class AI_controller(object):
                 
                 #determine what way a kinged piece will move
                 if(self.board[row][col] == " Q "):
-                    if(row+1==7):
+                    if(row+1>7):
                         new_row = row-1
-                    if(row==0):
+                    if(row-1 <0):
                         new_row =row+1
                     if(row>0 and row<7):
                         new_row = + choice(rand_comp)

@@ -81,7 +81,7 @@ while(cont == True):
                 board = player_cont.move(coor)
                 error = False
             except:
-                print("Invalid input, Please Try again")
+                print("Invalid input, Please re-enter your move.")
                 error = True
 
         print("    0  1  2  3  4  5  6  7")
@@ -112,16 +112,16 @@ while(cont == True):
 
     if(player_won == True):
         coor = input("Player Has won would you like to play again. Y/N?")
-        if(coor == "N" or coor == "n"): cont == False
+        if(coor == "N" or coor == "n"): cont = False
         if(coor == "Y" or coor == "y"):
-            cont == True
+            cont = True
             #rePopulate board
             board = populate_board(board)
     if(ai_won == True):
         coor = input("AI Has won would you like to play again. Y/N?")
-        if(coor == "N" or coor == "n"): cont == False
+        if(coor == "N" or coor == "n"): cont = False
         if(coor == "Y" or coor == "y"):
-            cont == True
+            cont = True
             #rePopulate board
             board = populate_board(board)
 
