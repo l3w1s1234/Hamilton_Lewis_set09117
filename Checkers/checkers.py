@@ -66,16 +66,23 @@ cont = True
 coor = ""
 player_won = False
 ai_won = False
-
+error = False
 
 #game loop
 while(cont == True):
 
     if(ai_won == False):
         print("\nEnter the row and column of the checker you want to move.\n e.g. (0,0) would be the top left of the board and (7,7) would be bottom right.")
-        coor = input()
+        error = True
+        while(error == True):
+            try:
+                coor = input()
 
-        board = player_cont.move(coor)
+                board = player_cont.move(coor)
+                error = False
+            except:
+                print("Invalid input, Please Try again")
+                error = True
 
         print("    0  1  2  3  4  5  6  7")
         #display board
@@ -106,14 +113,14 @@ while(cont == True):
     if(player_won == True):
         coor = input("Player Has won would you like to play again. Y/N?")
         if(coor == "N" or coor == "n"): cont == False
-        elif(coor == "Y" or coor == "y"):
+        if(coor == "Y" or coor == "y"):
             cont == True
             #rePopulate board
             board = populate_board(board)
     if(ai_won == True):
-        coor = input("Player Has won would you like to play again. Y/N?")
+        coor = input("AI Has won would you like to play again. Y/N?")
         if(coor == "N" or coor == "n"): cont == False
-        elif(coor == "Y" or coor == "y"):
+        if(coor == "Y" or coor == "y"):
             cont == True
             #rePopulate board
             board = populate_board(board)

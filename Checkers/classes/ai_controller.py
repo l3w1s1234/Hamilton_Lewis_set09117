@@ -37,18 +37,18 @@ class AI_controller(object):
                 coor = choice(self.possible_jumps)
                 row = int(coor[0])
                 col = int(coor.split(",")[-1])
-                
+                print (coor)
 
                 #do a jump for normal counter
                 if(self.board[row][col] == " B "):
-                    if(col+2<7):    
+                    if(col+2<=7):    
                         if(self.board[row+1][col+1] == " R " and self.board[row+2][col+2] == " | " and valid_move == False):
                             new_row = row+1
                             new_col = col+1
                             valid_move = self.jump_counter(row,col,new_row,new_col)
                             print("Computer jumped counter at",new_row,",",new_col)
 
-                    if(col-2>0):
+                    if(col-2>=0):
                         if(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | " and valid_move == False):
                             new_row = row+1
                             new_col = col-1
@@ -58,28 +58,28 @@ class AI_controller(object):
                #do a jump for a kinged piece
                 if(self.board[row][col] == " Q "):
 
-                    if(row+2 < 7):
-                        if(col+2<7):
+                    if(row+2 <= 7):
+                        if(col+2<=7):
                             if(self.board[row+1][col+1] == " R " and self.board[row+2][col+2] == " | " and valid_move == False):
                                 new_row = row+1
                                 new_col = col+1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
                                 print("Computer jumped counter at",new_row,",",new_col)
-                        if(col-2>0):
+                        if(col-2>=0):
                             if(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | " and valid_move == False):
                                 new_row = row+1
                                 new_col = col-1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
                                 print("Computer jumped counter at",new_row,",",new_col)
-                    if(row-2 > 0):
-                        if(col+2<7):
+                    if(row-2 >= 0):
+                        if(col+2<=7):
                             
                             if(self.board[row-1][col+1] == " R " and self.board[row-2][col+2] == " | " and valid_move == False):
                                 new_row = row-1
                                 new_col = col+1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
                                 print("Computer jumped counter at",new_row,",",new_col)
-                        if(col-2>0):
+                        if(col-2>=0):
                             if(self.board[row-1][col-1] == " R " and self.board[row-2][col-2] == " | " and valid_move == False):
                                 new_row = row-1
                                 new_col = col-1
@@ -140,7 +140,7 @@ class AI_controller(object):
         if(valid_move != True and is_a_king == False):
             if(new_col == col+1 or new_col == col-1):
                 if(new_row == row+1):
-                    if(self.board[new_row][new_col] != " B " and new_row != 7):
+                    if(self.board[new_row][new_col] == " | " and new_row != 7):
                         self.board[row][col] = " | "
                         self.board[new_row][new_col] = " B "
                         valid_move = True
@@ -206,7 +206,7 @@ class AI_controller(object):
                         self.possible_jumps.insert(-1,coor)
 
                 if(row-1>0):
-                    if(self.board[row-1][col+1] == " R " or self.board[row+1][col+1] == " K "):
+                    if(self.board[row-1][col+1] == " R " or self.board[row-1][col+1] == " K "):
                         new_row = row+1
                         new_col = col+1
                         valid_move = self.check_jump(row, col, new_row, new_col)
@@ -224,7 +224,7 @@ class AI_controller(object):
                         coor = str(row)+ "," + str(col)
                         self.possible_jumps.insert(-1,coor)
                 if(row-1>0):
-                    if(self.board[row-1][col-1] == " R " or self.board[row+1][col-1] == " K "):
+                    if(self.board[row-1][col-1] == " R " or self.board[row-1][col-1] == " K "):
                         new_row = row+1
                         new_col = col-1
                         valid_move = self.check_jump(row, col, new_row, new_col)
@@ -348,7 +348,7 @@ class AI_controller(object):
                     self.board[new_row][new_col] = " | "
                     self.board[new_row+1][new_col-1] = " Q "
                 
-
+            #check if more jumps can be made
             if(col + 2 <= 7 and row+2 <=7): 
                 if(self.board[row+1][col+1] == " R "and self.board[row+2][col+2] == " | "):
                     new_row = row-1
