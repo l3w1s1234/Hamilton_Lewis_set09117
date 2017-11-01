@@ -2,6 +2,7 @@ from classes.controller import Controller
 from classes.stack import stack
 from classes.ai_controller import AI_controller
 from random import *
+import copy
 
 
 def populate_board(board):
@@ -60,7 +61,10 @@ ai_cont = AI_controller(board)
 
 board = populate_board(board)
 
+undo = stack()
+redo = stack()
 
+testList = []
 #Start the game loop
 cont = True
 coor = ""
@@ -70,19 +74,103 @@ error = False
 
 #game loop
 while(cont == True):
-
     if(ai_won == False):
-        print("\nEnter the row and column of the checker you want to move.\n e.g. (0,0) would be the top left of the board and (7,7) would be bottom right.")
+        print("\nWhat would you like to do?\nMove or undo")
+
+        #will check the entered operation
         error = True
+        while(error == True):            
+            coor = input()
+            if(coor == "undo" and undo.isEmpty() == False):
+                error = False
+            elif(coor == "move"):
+                error = False
+            else:
+                
+                print("Invalid input, Please enter either move or undo.")
+                error = True
+
+       
+            
+          
+                
+
+        #do undo if it can
+        if(coor == "undo"):
+            while(coor == "undo" or coor == "redo"):
+                if(coor == "undo" and undo.isEmpty() == False):
+                    
+                    redo.push(copy.deepcopy(board))
+                    board = copy.deepcopy(undo.pop())                  
+                
+
+                    
+
+                     #display board
+                    print("    0  1  2  3  4  5  6  7")
+                    for x in range(0, width):
+                        print("")
+                        print(x,end="  ")
+                        for y in range(0, height):
+                            print(board[x][y], end="")
+                            
+                elif(coor == "redo" and redo.isEmpty() == False):
+                    
+                    undo.push(copy.deepcopy(board))
+                    board = copy.deepcopy(redo.pop()) 
+
+
+
+                     #display board
+                    print("    0  1  2  3  4  5  6  7")
+                    for x in range(0, width):
+                        print("")
+                        print(x,end="  ")
+                        for y in range(0, height):
+                            print(board[x][y], end="")
+                
+                print("What would you like to do?\nMove undo or redo")
+                #will check the entered operation
+                error = True
+                while(error == True):
+                        coor = input()
+                        if(coor == "undo" and undo.isEmpty() == False):
+                            error = False
+                        elif(coor == "redo" and redo.isEmpty() == False):
+                            error = False
+                        elif(coor == "move"):
+                            error = False
+                        else:
+                            print("Invalid input, Please enter either move, undo or redo.")
+                            error = True
+
+                    
+                        
+                       
+                
+                
+                
+        
+        print("Enter the row and column of the checker you want to move.\n e.g. (0,0) would be the top left of the board and (7,7) would be bottom right.")
+        error = True
+        undo.push(copy.deepcopy(board))
+        while(redo.isEmpty() == False):
+            redo.pop()
+
+        
         while(error == True):
             try:
                 coor = input()
-
-                board = player_cont.move(coor)
+                board = player_cont.move(coor,board)
+                #break the loop if there was no error in the move
                 error = False
+                
             except:
-                print("Invalid input, Please re-enter your move.")
+                print("Invalid input, Please re-enter the checker you want to move.")
                 error = True
+
+
+        
 
         print("    0  1  2  3  4  5  6  7")
         #display board
@@ -94,10 +182,12 @@ while(cont == True):
 
         player_won = player_cont.has_won()
 
+
+
     #do ai's move
     if(player_won == False):
         print("\nComputers turn.")
-        board = ai_cont.move()
+        board = ai_cont.move(board)
 
         print("    0  1  2  3  4  5  6  7")
      #display board
@@ -124,6 +214,10 @@ while(cont == True):
             cont = True
             #rePopulate board
             board = populate_board(board)
+
+    
+
+    
 
 
         

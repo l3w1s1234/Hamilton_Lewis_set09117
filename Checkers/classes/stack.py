@@ -1,6 +1,6 @@
 class stack:
     def __init__(self):
-        self.itmes = []
+        self.items = []
 
     def isEmpty(self):
         return self.items == []

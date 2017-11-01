@@ -10,7 +10,8 @@ class Controller(object):
 
     
 #will take a players inputs and make sure that they are valid
-    def move(self, coor):
+    def move(self, coor, board=[[0 for x in range(8)]for y in range(8)]):
+        self.board = board
         row = int(coor[0])
         col = int(coor.split(",")[-1])
         can_move = False

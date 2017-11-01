@@ -13,7 +13,8 @@ class AI_controller(object):
 
     
 #will allow the computer to make a move
-    def move(self,):
+    def move(self,board=[[0 for x in range(8)]for y in range(8)]):
+        self.board = board
         self.valid_items.clear()
         self.possible_jumps.clear()
         valid_item = False
