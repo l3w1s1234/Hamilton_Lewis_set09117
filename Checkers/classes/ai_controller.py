@@ -47,14 +47,14 @@ class AI_controller(object):
                             new_row = row+1
                             new_col = col+1
                             valid_move = self.jump_counter(row,col,new_row,new_col)
-                            if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
+                            
 
                     if(col-2>=0):
                         if(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | " and valid_move == False):
                             new_row = row+1
                             new_col = col-1
                             valid_move = self.jump_counter(row,col,new_row,new_col)
-                            if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
+                            
 
                #do a jump for a kinged piece
                 if(self.board[row][col] == " Q "):
@@ -65,13 +65,13 @@ class AI_controller(object):
                                 new_row = row+1
                                 new_col = col+1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
-                                if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
+                                
                         if(col-2>=0):
                             if(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | " and valid_move == False):
                                 new_row = row+1
                                 new_col = col-1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
-                                if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
+                                
                     if(row-2 >= 0):
                         if(col+2<=7):
                             
@@ -79,17 +79,18 @@ class AI_controller(object):
                                 new_row = row-1
                                 new_col = col+1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
-                                if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
+                                
                         if(col-2>=0):
                             if(self.board[row-1][col-1] == " R " and self.board[row-2][col-2] == " | " and valid_move == False):
                                 new_row = row-1
                                 new_col = col-1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
-                                if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
+                                
 
 
 
-                        
+            if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
+            
             #will do a move that isnt a jump
             if(valid_move == False):
                 
@@ -125,7 +126,7 @@ class AI_controller(object):
             
                 valid_move = self.check_valid(row, col, new_row, new_col)
 
-                print("Computer moved counter at",coor," to ",new_row,",",new_col)
+                if(valid_move == True):print("Computer moved counter at",coor," to ",new_row,",",new_col)
         
 
         return self.board

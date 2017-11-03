@@ -76,7 +76,7 @@ error = False
 #game loop
 while(cont == True):
     if(ai_won == False):
-        print("\nWhat would you like to do?\nMove or undo")
+        print("\nWhat would you like to do?\nMove or undo or end")
 
         #will check the entered operation
         error = True
@@ -86,6 +86,9 @@ while(cont == True):
                 error = False
             elif(coor == "move"):
                 error = False
+            elif(coor == "end"):
+                error = False
+                cont = False
             else:
                 
                 print("Invalid input, Please enter either move or undo.")
@@ -130,7 +133,7 @@ while(cont == True):
                         for y in range(0, height):
                             print(board[x][y], end="")
                 
-                print("What would you like to do?\nMove undo or redo")
+                print("What would you like to do?\nMove undo or redo or end")
                 #will check the entered operation
                 error = True
                 while(error == True):
@@ -141,6 +144,9 @@ while(cont == True):
                             error = False
                         elif(coor == "move"):
                             error = False
+                        elif(coor == "end"):
+                            error = False
+                            cont = False
                         else:
                             print("Invalid input, Please enter either move, undo or redo.")
                             error = True
@@ -150,83 +156,83 @@ while(cont == True):
                        
                 
                 
-                
-        
-        print("Enter the row and column of the checker you want to move.\n e.g. (0,0) would be the top left of the board and (7,7) would be bottom right.")
-        error = True
-        undo.push(copy.deepcopy(board))
-        while(redo.isEmpty() == False):
-            redo.pop()
+       #do everything else if the game hasnt enced         
+        if(cont == True):
+            print("Enter the row and column of the checker you want to move.\n e.g. (0,0) would be the top left of the board and (7,7) would be bottom right.")
+            error = True
+            undo.push(copy.deepcopy(board))
+            while(redo.isEmpty() == False):
+                redo.pop()
 
         
-        while(error == True):
-            try:
-                coor = input()
-                board = player_cont.move(coor,board)
-                #break the loop if there was no error in the move
-                error = False
-                
-            except:
-                print("Invalid input, Please re-enter the checker you want to move.")
+            while(error == True):
+                try:
+                    coor = input()
+                    board = player_cont.move(coor,board)
+                    #break the loop if there was no error in the move
+                    error = False
+                    
+                except:
+                    print("Invalid input, Please re-enter the checker you want to move.")
+                    error = True
+
+
+        
+
+            print("    0  1  2  3  4  5  6  7")
+            #display board
+            for x in range(0, width):
+                print("")
+                print(x,end="  ")
+                for y in range(0, height):
+                    print(board[x][y], end="")
+
+            player_won = player_cont.has_won()
+
+
+
+            #do ai's move
+            if(player_won == False):
+                print("\nComputers turn.")
+                board = ai_cont.move(board)
+
+                print("    0  1  2  3  4  5  6  7")
+             #display board
+                for x in range(0, width):
+                    print("")
+                    print(x,end="  ")
+                    for y in range(0, height):
+                        print(board[x][y], end="")
+
+                ai_won = ai_cont.has_won()
+
+
+            if(player_won == True):
                 error = True
-
-
-        
-
-        print("    0  1  2  3  4  5  6  7")
-        #display board
-        for x in range(0, width):
-            print("")
-            print(x,end="  ")
-            for y in range(0, height):
-                print(board[x][y], end="")
-
-        player_won = player_cont.has_won()
-
-
-
-    #do ai's move
-    if(player_won == False):
-        print("\nComputers turn.")
-        board = ai_cont.move(board)
-
-        print("    0  1  2  3  4  5  6  7")
-     #display board
-        for x in range(0, width):
-            print("")
-            print(x,end="  ")
-            for y in range(0, height):
-                print(board[x][y], end="")
-
-        ai_won = ai_cont.has_won()
-
-
-    if(player_won == True):
-        error = True
-        while(error == True):
-            coor = input("Player Has won would you like to play again. Y/N?")
-            if(coor == "N" or coor == "n"):
-                cont = False
-                error = False
-            if(coor == "Y" or coor == "y"):
-                error =False
-                cont = True
-                #rePopulate board
-                board = populate_board(board)
-            if(error == True):print("Invalid input, please enter Y or N")
-    if(ai_won == True):
-        error = True
-        while(error == True):
-            coor = input("Player Has won would you like to play again. Y/N?")
-            if(coor == "N" or coor == "n"):
-                cont = False
-                error = False
-            if(coor == "Y" or coor == "y"):
-                error =False
-                cont = True
-                #rePopulate board
-                board = populate_board(board)
-            if(error == True):print("Invalid input, please enter Y or N")
+                while(error == True):
+                    coor = input("Player Has won would you like to play again. Y/N?")
+                    if(coor == "N" or coor == "n"):
+                        cont = False
+                        error = False
+                    if(coor == "Y" or coor == "y"):
+                        error =False
+                        cont = True
+                        #rePopulate board
+                        board = populate_board(board)
+                    if(error == True):print("Invalid input, please enter Y or N")
+            if(ai_won == True):
+                error = True
+                while(error == True):
+                    coor = input("Player Has won would you like to play again. Y/N?")
+                    if(coor == "N" or coor == "n"):
+                        cont = False
+                        error = False
+                    if(coor == "Y" or coor == "y"):
+                        error =False
+                        cont = True
+                        #rePopulate board
+                        board = populate_board(board)
+                    if(error == True):print("Invalid input, please enter Y or N")
 
     
 
