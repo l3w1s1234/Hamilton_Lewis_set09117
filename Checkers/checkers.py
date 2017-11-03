@@ -6,6 +6,7 @@ import copy
 
 
 def populate_board(board):
+    
         #populates the board
     print("    0  1  2  3  4  5  6  7")
     for x in range(0, width):
@@ -64,7 +65,7 @@ board = populate_board(board)
 undo = stack()
 redo = stack()
 
-testList = []
+
 #Start the game loop
 cont = True
 coor = ""
@@ -201,19 +202,31 @@ while(cont == True):
 
 
     if(player_won == True):
-        coor = input("Player Has won would you like to play again. Y/N?")
-        if(coor == "N" or coor == "n"): cont = False
-        if(coor == "Y" or coor == "y"):
-            cont = True
-            #rePopulate board
-            board = populate_board(board)
+        error = True
+        while(error == True):
+            coor = input("Player Has won would you like to play again. Y/N?")
+            if(coor == "N" or coor == "n"):
+                cont = False
+                error = False
+            if(coor == "Y" or coor == "y"):
+                error =False
+                cont = True
+                #rePopulate board
+                board = populate_board(board)
+            if(error == True):print("Invalid input, please enter Y or N")
     if(ai_won == True):
-        coor = input("AI Has won would you like to play again. Y/N?")
-        if(coor == "N" or coor == "n"): cont = False
-        if(coor == "Y" or coor == "y"):
-            cont = True
-            #rePopulate board
-            board = populate_board(board)
+        error = True
+        while(error == True):
+            coor = input("Player Has won would you like to play again. Y/N?")
+            if(coor == "N" or coor == "n"):
+                cont = False
+                error = False
+            if(coor == "Y" or coor == "y"):
+                error =False
+                cont = True
+                #rePopulate board
+                board = populate_board(board)
+            if(error == True):print("Invalid input, please enter Y or N")
 
     
 

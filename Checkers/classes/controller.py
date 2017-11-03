@@ -248,7 +248,19 @@ class Controller(object):
                     if(self.board[row-1][col-1] == " B " and self.board[row-2][col-2] == " | "):
                         new_row = row - 1
                         new_col = col - 1
-                
+
+            
+            if(row-2 >=0):
+                if(col + 2 <= 7 ): 
+                    if(self.board[row-1][col+1] == " Q " and self.board[row-2][col+2] == " | "):
+                        new_row = row-1
+                        new_col = col+1
+                if(col-2>=0 ):
+                    if(self.board[row-1][col-1] == " Q " and self.board[row-2][col-2] == " | "):
+                        new_row = row - 1
+                        new_col = col - 1
+
+            #if no jumps can be made   
             if(new_col>col ):
                 if(new_col+1 > 7):
                     can_jump = False

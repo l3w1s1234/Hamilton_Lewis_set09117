@@ -29,7 +29,7 @@ class AI_controller(object):
                     coor = str(x) + "," + str(y)
                     self.valid_items.insert(-1,coor)
         
-        print(self.possible_jumps)
+        
         #select a random item to move
         while(valid_move == False):
 
@@ -38,7 +38,7 @@ class AI_controller(object):
                 coor = choice(self.possible_jumps)
                 row = int(coor[0])
                 col = int(coor.split(",")[-1])
-                print (coor)
+                
 
                 #do a jump for normal counter
                 if(self.board[row][col] == " B "):
@@ -47,14 +47,14 @@ class AI_controller(object):
                             new_row = row+1
                             new_col = col+1
                             valid_move = self.jump_counter(row,col,new_row,new_col)
-                            print("Computer jumped counter at",new_row,",",new_col)
+                            if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
 
                     if(col-2>=0):
                         if(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | " and valid_move == False):
                             new_row = row+1
                             new_col = col-1
                             valid_move = self.jump_counter(row,col,new_row,new_col)
-                            print("Computer jumped counter at",new_row,",",new_col)
+                            if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
 
                #do a jump for a kinged piece
                 if(self.board[row][col] == " Q "):
@@ -65,13 +65,13 @@ class AI_controller(object):
                                 new_row = row+1
                                 new_col = col+1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
-                                print("Computer jumped counter at",new_row,",",new_col)
+                                if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
                         if(col-2>=0):
                             if(self.board[row+1][col-1] == " R " and self.board[row+2][col-2] == " | " and valid_move == False):
                                 new_row = row+1
                                 new_col = col-1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
-                                print("Computer jumped counter at",new_row,",",new_col)
+                                if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
                     if(row-2 >= 0):
                         if(col+2<=7):
                             
@@ -79,13 +79,13 @@ class AI_controller(object):
                                 new_row = row-1
                                 new_col = col+1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
-                                print("Computer jumped counter at",new_row,",",new_col)
+                                if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
                         if(col-2>=0):
                             if(self.board[row-1][col-1] == " R " and self.board[row-2][col-2] == " | " and valid_move == False):
                                 new_row = row-1
                                 new_col = col-1
                                 valid_move = self.jump_counter(row,col,new_row,new_col)
-                                print("Computer jumped counter at",new_row,",",new_col)
+                                if(valid_move == True):print("Computer jumped counter at",new_row,",",new_col)
 
 
 
@@ -358,6 +358,19 @@ class AI_controller(object):
                 if(self.board[row+1][col-1] == " R "and self.board[row+2][col-2] == " | "):
                     new_row = row - 1
                     new_col = col - 1
+
+            if(row-2 >=0):
+                if(col + 2 <= 7 ): 
+                    if(self.board[row-1][col+1] == " K " and self.board[row-2][col+2] == " | "):
+                        new_row = row-1
+                        new_col = col+1
+                if(col-2>=0 ):
+                    if(self.board[row-1][col-1] == " K " and self.board[row-2][col-2] == " | "):
+                        new_row = row - 1
+                        new_col = col - 1
+
+
+            
                 
             if(new_col>col):
                 if(new_col+1 > 7):
