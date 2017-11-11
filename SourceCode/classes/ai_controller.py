@@ -97,7 +97,7 @@ class AI_controller(object):
                 coor = choice(self.valid_items)
                 row = int(coor[0])
                 col = int(coor.split(",")[-1])
-                rand_comp = {1, -1}
+                rand_comp = {1, -1}#will choose to either go up the board or down the board 
                 new_row = row+1
 
                 
@@ -110,7 +110,7 @@ class AI_controller(object):
                     if(row>0 and row<7):
                         new_row = + choice(rand_comp)
                     
-                new_col = randint(0,1)
+                new_col = randint(1,1)
 
                 #will determine if the new column will be a move to the right or left
                 if(new_col == 0):

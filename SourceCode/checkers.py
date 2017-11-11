@@ -51,6 +51,8 @@ def populate_board(board):
 
     return board
 
+
+print("To play the game you have to enter the command you want to do.Either move, undo, redo or end.\nWhen moving a piece enter its row and then column.\ne.g. 5,0 would select the R counter at row 5 and coluumn 0, that piece can only be moved to 4,1.\nAfter a piece has been moved the AI will then take their turn.\nAfter the AI has taken their turn you can then move another piece or undo/redo your game.\nTo End your game type end at anytime.\n")
 #declared variables for the board
 width =8
 height = 8
@@ -156,7 +158,7 @@ while(cont == True):
                        
                 
                 
-       #do everything else if the game hasnt enced         
+       #do everything else if the game hasnt ended        
         if(cont == True):
             print("Enter the row and column of the checker you want to move.\n e.g. (0,0) would be the top left of the board and (7,7) would be bottom right.")
             error = True
